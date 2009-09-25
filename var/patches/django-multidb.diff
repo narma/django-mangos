@@ -1,0 +1,14 @@
+Index: django/db/backends/mysql/base.py
+===================================================================
+--- django/db/backends/mysql/base.py	(revision 9791)
++++ django/db/backends/mysql/base.py	(working copy)
+@@ -152,7 +152,7 @@
+     def quote_name(self, name):
+         if name.startswith("`") and name.endswith("`"):
+             return name # Quoting once is enough.
+-        return "`%s`" % name
++        return '.'.join(('`%s`' % i for i in name.split('.'))) # hack for support multiple database. //narma
+ 
+     def random_function_sql(self):
+         return 'RAND()'
+
